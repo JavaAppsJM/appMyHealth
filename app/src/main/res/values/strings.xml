@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">My Health</string>
+    <string name="belly">Buikomtrek</string>
+    <string name="blood_pressure">Bloeddruk</string>
+    <string name="resumeinfo">ResumeInfo</string>
+    <string name="title_activity_belly">Buikomtrek Meting</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="enter_values_and_press_add">Vul in en druk toevoegen</string>
+    <string name="date_input_label">Datum:</string>
+    <string name="belly_radius_input_label">Buikomtrek:</string>
+    <string name="enter_date_hint">datum</string>
+    <string name="enter_date_text">vul datum in</string>
+    <string name="enter_belly_radius_hint">buikomtrek</string>
+    <string name="add_belly_measurement_button">Toevoegen</string>
+    <string name="datepicker">datePicker</string>
+    <string name="todo">TODO</string>
+    <string name="bellyMeasurementListLabelDate">Datum</string>
+    <string name="BellyMeasurementsListLabelRadius">Buikomtrek</string>
+    <string name="update_belly_measurement_text">Pas de buikomtrek aan en druk op Aanpassen</string>
+    <string name="title_update_belly">Aanpassen Buikomtrek</string>
+    <string name="title_new_belly">Toevoegen Buikomtrek</string>
+    <string name="hello_blank_fragment">Hello Blank Fragment</string>
+    <string name="aanpassen_button">Aanpassen</string>
+
+</resources>
