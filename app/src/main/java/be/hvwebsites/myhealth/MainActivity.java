@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+
+import be.hvwebsites.myhealth.repositories.MeasurementRepository;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int INTENT_REQUEST_CODE = 1;
+    private MeasurementRepository repository = new MeasurementRepository();
     public static final String BELLY_FILE = "buikomtrek.txt";
 
     @Override
@@ -23,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
         // Ophalen belly measurements
         String baseDir = getBaseContext().getExternalFilesDir(null).getAbsolutePath();
         File bellyFile = new File(baseDir, BELLY_FILE);
+        int rc = repository.initializeRepository(bellyFile).getReturnCode();
+        if ( rc == 0){
+            latestMeasurementsView.setText("laatste meting: " + repository.getLatestMeting());
+        } else if (rc == 100){
+            latestMeasurementsView.setText("er zijn nog geen buikomtrek metingen !");
+        } else {
+            latestMeasurementsView.setText("er is een probleem opgetreden bij het ophalen vd metingen !");
+        }
+
+/*
         String[] fileLines = new String[1000];
         if (bellyFile.exists()) {
             try {
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             latestMeasurementsView.setText("er zijn nog geen buikomtrek metingen !");
         }
+*/
     }
 
     // Als op knop Buikomtrek wordt gedrukt

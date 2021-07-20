@@ -12,16 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import be.hvwebsites.myhealth.entities.Belly;
+import be.hvwebsites.myhealth.entities.Measurement;
 
 public class NewBellyMeasurementActivity extends AppCompatActivity {
     private EditText dateView;
     private EditText radiusView;
-    public static final String EXTRA_INTENT_KEY_ACTION =
-            "be.hvwebsites.myhealth.INTENT_KEY_ACTION";
-    public static final String EXTRA_INTENT_KEY_DATE =
-            "be.hvwebsites.myhealth.INTENT_KEY_DATE";
-    public static final String EXTRA_INTENT_KEY_RADIUS =
-            "be.hvwebsites.myhealth.INTENT_KEY_RADIUS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +28,6 @@ public class NewBellyMeasurementActivity extends AppCompatActivity {
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // replyintent vr startActivityForResult
-                //Intent replyIntent = new Intent();
-                // Gewone startactivity dan kan de reply in de onCreate verwerkt worden
-                // dit om de refresh vd adapter te kunnen doen
                 Intent replyIntent = new Intent(NewBellyMeasurementActivity.this,
                         BellyActivity.class);
                 if (TextUtils.isEmpty(dateView.getText()) ||
@@ -50,18 +41,12 @@ public class NewBellyMeasurementActivity extends AppCompatActivity {
                     Toast.makeText(NewBellyMeasurementActivity.this,
                             "New belly measurement : " + belly.toString(),
                             Toast.LENGTH_LONG).show();
-                    replyIntent.putExtra(EXTRA_INTENT_KEY_DATE, dateString);
-                    replyIntent.putExtra(EXTRA_INTENT_KEY_RADIUS,
+                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_DATE, dateString);
+                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
                             Float.parseFloat(String.valueOf(radiusView.getText())));
-                    // Bepalen of er moet geupdate of geinsert worden obv wat er via de intent binnenkomt
-                    // is niet langer nodig gezien update niet langs hier mag komen !!
-                    // Intent intentAction = getIntent();
-                    // setResult vr startActivityForResult
-                    //setResult(RESULT_OK, replyIntent);
-                    replyIntent.putExtra(EXTRA_INTENT_KEY_ACTION, "insert");
+                    replyIntent.putExtra(BellyActivity.EXTRA_INTENT_KEY_ACTION, "insert");
                     startActivity(replyIntent);
                 }
-                //finish();
             }
         });
     }

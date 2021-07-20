@@ -1,20 +1,28 @@
 package be.hvwebsites.myhealth.entities;
 
-import androidx.annotation.NonNull;
-
-public class Belly {
+public class Belly extends Measurement {
+/*
     private String date;
     private float bellyRadius;
     private String remark; // initieel niet gebruikt
     private int dateInt;
+    public static final String EXTRA_INTENT_KEY_DATE =
+            "be.hvwebsites.myhealth.INTENT_KEY_DATE";
+    public static final String EXTRA_INTENT_KEY_RADIUS =
+            "be.hvwebsites.myhealth.INTENT_KEY_RADIUS";
+*/
 
     public Belly() {
     }
 
-    public Belly(String inputDate, float bellyRadius) {
+    public Belly(String inputDate, float inputValue) {
+        super(inputDate, inputValue);
+/*
         setDate(trimDate(inputDate));
         this.bellyRadius = bellyRadius;
+*/
     }
+/*
 
     private String trimDate(String inputDate){
         String[] dateStringParts = inputDate.split("/");
@@ -87,5 +95,6 @@ public class Belly {
                 ", dateInt=" + dateInt +
                 '}';
     }
+*/
 
 }

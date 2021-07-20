@@ -15,7 +15,6 @@ import be.hvwebsites.myhealth.returninfo.ReturnInfo;
 public class BellyViewModel extends AndroidViewModel {
     private BellyRepository repository;
     private List<Belly> tBellyList = new ArrayList<>();
-    private Belly latestBelly;
 
     public BellyViewModel(Application application){
         super(application);
@@ -26,7 +25,7 @@ public class BellyViewModel extends AndroidViewModel {
         ReturnInfo bellyToestand = repository.initializeRepository(bellyFile);
         if (bellyToestand.getReturnCode() == 0){
             tBellyList = repository.getTBellyList();
-            latestBelly = repository.getLatestBelly();
+            Belly latestBelly = repository.getLatestBelly();
         } else if (bellyToestand.getReturnCode() == 100){
         }else {
         }

@@ -18,7 +18,7 @@
     <string name="todo">TODO</string>
     <string name="bellyMeasurementListLabelDate">Datum</string>
     <string name="BellyMeasurementsListLabelRadius">Buikomtrek</string>
-    <string name="update_belly_measurement_text">Pas de buikomtrek aan en druk op Aanpassen</string>
+    <string name="update_belly_measurement_text">Pas buikomtrek aan en druk op Aanpassen</string>
     <string name="title_update_belly">Aanpassen Buikomtrek</string>
     <string name="title_new_belly">Toevoegen Buikomtrek</string>
     <string name="hello_blank_fragment">Hello Blank Fragment</string>

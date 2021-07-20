@@ -77,10 +77,10 @@ public class BellyRepository {
         String[] fileLineContent = fileLine.split("<");
         for (int i = 0; i < fileLineContent.length; i++) {
             if (fileLineContent[i].matches("date.*")){
-                belly.setDate(fileLineContent[i+1].replace(">",""));
+                belly.setMeasurementDate(fileLineContent[i+1].replace(">",""));
             }
             if (fileLineContent[i].matches("bellyRadius.*")){
-                belly.setBellyRadius(Float.valueOf(fileLineContent[i+1].replace(">","")));
+                belly.setMeasurementValue(Float.valueOf(fileLineContent[i+1].replace(">","")));
             }
         }
         return belly;
@@ -113,9 +113,9 @@ public class BellyRepository {
         for (int j = 0; j < bellies.size()-1; j++) {
             for (int i = bellies.size()-2 ; i >= j ; i--) {
                 if (bellies.get(i).getDateInt() < bellies.get(i+1).getDateInt()){
-                    tmpBelly.setBelly(bellies.get(i));
-                    bellies.get(i).setBelly(bellies.get(i+1));
-                    bellies.get(i+1).setBelly(tmpBelly);
+                    tmpBelly.setMeasurement(bellies.get(i));
+                    bellies.get(i).setMeasurement(bellies.get(i+1));
+                    bellies.get(i+1).setMeasurement(tmpBelly);
                 }
             }
         }
@@ -123,8 +123,8 @@ public class BellyRepository {
     }
 
     public String makeFileLine(Belly belly){
-        String fileLine = "<date><" + belly.getDate()
-                + "><bellyRadius><" + String.valueOf(belly.getBellyRadius()) + ">";
+        String fileLine = "<date><" + belly.getMeasurementDate()
+                + "><measurement><" + String.valueOf(belly.getMeasurementValue()) + ">";
         return fileLine;
     }
 
