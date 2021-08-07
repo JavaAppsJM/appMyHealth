@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -58,6 +55,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        // bepalen meegegeven bundle arguments
+        Bundle parmBundle = getArguments();
+        String caller = (String) parmBundle.get("Caller");
         // Use the current date as the default date in the picker.
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -70,7 +70,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker datePicker,
                           int year, int month, int day) {
-        NewBellyMeasurementActivity activity = (NewBellyMeasurementActivity) getActivity();
-        activity.processDatePickerResult(year, month, day);
+        // Geef resultaat aan de calling activity
+        NewDatePickerInterface callingActivity = (NewDatePickerInterface) getActivity();
+        callingActivity.processDatePickerResult(year, month, day);
     }
 }

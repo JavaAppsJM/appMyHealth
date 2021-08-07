@@ -7,6 +7,12 @@ public class Measurement {
     private float measurementValue;
     private String remark; // initieel niet gebruikt
     private int dateInt;
+    public static final String EXTRA_INTENT_KEY_ACTION =
+            "be.hvwebsites.myhealth.EXTRA_INTENT_KEY_ACTION";
+    public static final String EXTRA_INTENT_KEY_INDEX =
+            "be.hvwebsites.myhealth.EXTRA_INTENT_KEY_INDEX";
+    public static final String EXTRA_INTENT_KEY_TYPE =
+            "be.hvwebsites.myhealth.INTENT_KEY_TYPE";
     public static final String EXTRA_INTENT_KEY_DATE =
             "be.hvwebsites.myhealth.INTENT_KEY_DATE";
     public static final String EXTRA_INTENT_KEY_VALUE =
@@ -17,9 +23,16 @@ public class Measurement {
     public Measurement() {
     }
 
-    public Measurement(String inputDate, float measurementValue) {
+    public Measurement(String inputDate, float inputValue) {
         setMeasurementDate(trimDate(inputDate));
-        this.measurementValue = measurementValue;
+        measurementValue = inputValue;
+    }
+
+    public void setMeasurement(Measurement measurement2){
+        setMeasurementDate(measurement2.getMeasurementDate());
+        this.measurementValue = measurement2.getMeasurementValue();
+        setDateInt(measurement2.getDateInt());
+        setRemark(measurement2.getRemark());
     }
 
     public String getMeasurementDate(){
@@ -28,6 +41,10 @@ public class Measurement {
 
     public float getMeasurementValue() {
         return measurementValue;
+    }
+
+    public void setMeasurementValue(float measurementValue) {
+        this.measurementValue = measurementValue;
     }
 
     public String getRemark() {
@@ -42,10 +59,6 @@ public class Measurement {
         this.remark = remark;
     }
 
-    public void setMeasurementValue(float measurementValue) {
-        this.measurementValue = measurementValue;
-    }
-
     public void setDateInt(int dateInt) {
         this.dateInt = dateInt;
     }
@@ -55,19 +68,19 @@ public class Measurement {
         this.dateInt = Integer.parseInt(date.substring(4) + date.substring(2,4) + date.substring(0,2));
     }
 
-    public void setMeasurement(Measurement measurement2){
-        this.measurementDate = measurement2.getMeasurementDate();
-        this.measurementValue = measurement2.getMeasurementValue();
-        this.dateInt = measurement2.getDateInt();
-        this.remark = measurement2.getRemark();
+    public String getDateAndValue(){
+        return this.getFormatDate() + ": " + measurementValue;
+    }
+
+    public String getValueAsString(){
+        return String.valueOf(measurementValue);
     }
 
     @Override
     public String toString() {
         return "Meting{" +
                 "Datum = '" + measurementDate + '\'' +
-                ", Waarde =" + measurementValue +
-                ", Remark ='" + remark + '\'' +
+                ", Value ='" + measurementValue + '\'' +
                 ", dateInt =" + dateInt +
                 '}';
     }

@@ -19,7 +19,7 @@ public class MeasurementRepository {
         measurementList = new ArrayList<>();
     }
 
-    public Measurement getLatestMeting() {
+    public Measurement getLatestMeasurement  () {
         return latestMeasurement;
     }
 
@@ -27,8 +27,11 @@ public class MeasurementRepository {
         return measurementList;
     }
 
-    public ReturnInfo initializeRepository(File metingFile){
-        ReturnInfo metingToestand = fileNrMetingList(metingFile);
+    public ReturnInfo initializeRepository(File mFile){
+        // Initialize latestMeasurement en measurementList
+        latestMeasurement = new Measurement();
+        measurementList.clear();
+        ReturnInfo metingToestand = fileNrMeasurementList(mFile);
         if (metingToestand.getReturnCode() == 0){
             // Metingfile lezen is gelukt en metingen zitten in List
             // Bepaal latest meting
@@ -46,7 +49,7 @@ public class MeasurementRepository {
         return metingToestand;
     }
 
-    public ReturnInfo fileNrMetingList(File metingFile){
+    public ReturnInfo fileNrMeasurementList(File metingFile){
         ReturnInfo returnInfo = new ReturnInfo(0);
         // Meting File lezen
         if (metingFile.exists()){

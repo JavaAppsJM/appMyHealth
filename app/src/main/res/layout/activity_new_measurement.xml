@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewMeasurementActivity">
+    <TextView
+        android:id="@+id/newScrnInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/enter_values_and_press_add"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newScrnLabelDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/date_input_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScrnInstruction" />
+
+    <EditText
+        android:id="@+id/newScrnValueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/enter_date_hint"
+        android:inputType="date"
+        android:onClick="showDatePicker"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelDate"
+        app:layout_constraintStart_toEndOf="@+id/newScrnLabelDate" />
+
+    <TextView
+        android:id="@+id/newScrnLabelWaarde1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/waarde1Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScrnLabelDate" />
+
+    <EditText
+        android:id="@+id/newScrnValueWaarde1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/waarde1Hint"
+        android:inputType="numberDecimal"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelWaarde1"
+        app:layout_constraintStart_toEndOf="@+id/newScrnLabelWaarde1" />
+
+    <Button
+        android:id="@+id/newScrnButtonToevoegen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/add_belly_measurement_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScrnLabelWaarde3" />
+
+    <TextView
+        android:id="@+id/newScrnLabelWaarde2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/waarde2Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScrnLabelWaarde1" />
+
+    <TextView
+        android:id="@+id/newScrnLabelWaarde3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/waarde3Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScrnLabelWaarde2" />
+
+    <EditText
+        android:id="@+id/newScrnValueWaarde2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/waarde2Hint"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelWaarde2"
+        app:layout_constraintStart_toEndOf="@+id/newScrnLabelWaarde2"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/newScrnValueWaarde3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/waarde3Hint"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelWaarde3"
+        app:layout_constraintStart_toEndOf="@+id/newScrnLabelWaarde3"
+        android:autofillHints="" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

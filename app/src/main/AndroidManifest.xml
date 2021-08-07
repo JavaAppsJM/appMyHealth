@@ -10,23 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyHealth">
         <activity
-            android:name=".UpdateBellyMActivity"
-            android:parentActivityName=".BellyActivity"
+            android:name=".UpdateMeasurementActivity"
+            android:parentActivityName=".MListActivity"
             android:label="@string/title_update_belly">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.hvwebsites.myhealth.BellyActivity" />
+                android:value="be.hvwebsites.myhealth.MListActivity" />
         </activity>
         <activity
-            android:name=".NewBellyMeasurementActivity"
-            android:parentActivityName=".BellyActivity"
+            android:name=".NewMeasurementActivity"
+            android:parentActivityName=".MListActivity"
             android:label="@string/title_new_belly">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.hvwebsites.myhealth.BellyActivity" />
+                android:value="be.hvwebsites.myhealth.MListActivity" />
         </activity>
         <activity
-            android:name=".BellyActivity"
+            android:name=".MListActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_belly">
             <meta-data

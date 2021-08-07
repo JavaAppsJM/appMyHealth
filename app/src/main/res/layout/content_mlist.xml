@@ -18,12 +18,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/mListColHead1"
         tools:ignore="MissingConstraints"
-        tools:listitem="@layout/recyclerview_belly_item" />
+        tools:listitem="@layout/recyclerview_mlist_item" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mListColHead1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -34,13 +34,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/mListColHead2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/BellyMeasurementsListLabelRadius"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/mListColHead1"
+        app:layout_constraintStart_toEndOf="@+id/mListColHead1" />
+
+    <TextView
+        android:id="@+id/mListColHead3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/lower"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mListColHead2"
+        app:layout_constraintStart_toEndOf="@+id/mListColHead2" />
+
+    <TextView
+        android:id="@+id/mListColHead4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/heartbeat"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mListColHead3"
+        app:layout_constraintStart_toEndOf="@+id/mListColHead3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
