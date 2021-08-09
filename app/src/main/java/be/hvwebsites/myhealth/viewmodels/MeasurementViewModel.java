@@ -30,12 +30,11 @@ public class MeasurementViewModel extends AndroidViewModel {
     File upperPFile;
     File lowerPFile;
     File heartbeatFile;
+    // File names constants
     public static final String BELLY_FILE = "buikomtrek.txt";
     public static final String UPPER_BLOOD_PRESSURE_FILE = "bovendruk.txt";
     public static final String LOWER_BLOOD_PRESSURE_FILE = "onderdruk.txt";
     public static final String HEARTBEAT_FILE = "hartslag.txt";
-    // TODO: Filenames vanuit strings halen
-//    String bellyFileName = getResources().getString(R.string.bellyFile);
 
     public MeasurementViewModel(Application application){
         super(application);
@@ -48,6 +47,7 @@ public class MeasurementViewModel extends AndroidViewModel {
         upperPFile = new File(baseDir, UPPER_BLOOD_PRESSURE_FILE);
         lowerPFile = new File(baseDir, LOWER_BLOOD_PRESSURE_FILE);
         heartbeatFile = new File(baseDir, HEARTBEAT_FILE);
+        // Bellies ophalen
         ReturnInfo measurementStatus = repository.initializeRepository(bellyFile);
         if (measurementStatus.getReturnCode() == 0){
             bellyList.addAll(repository.getMeasurementList());
@@ -55,6 +55,7 @@ public class MeasurementViewModel extends AndroidViewModel {
         } else if (measurementStatus.getReturnCode() == 100){
         }else {
         }
+        // Bovendruk metingen ophalen
         measurementStatus = repository.initializeRepository(upperPFile);
         if (measurementStatus.getReturnCode() == 0){
             upperMList.addAll(repository.getMeasurementList());
@@ -62,6 +63,7 @@ public class MeasurementViewModel extends AndroidViewModel {
         } else if (measurementStatus.getReturnCode() == 100){
         }else {
         }
+        // Onderdruk metingen ophalen
         measurementStatus = repository.initializeRepository(lowerPFile);
         if (measurementStatus.getReturnCode() == 0){
             lowerMList.addAll(repository.getMeasurementList());
@@ -69,6 +71,7 @@ public class MeasurementViewModel extends AndroidViewModel {
         } else if (measurementStatus.getReturnCode() == 100){
         }else {
         }
+        // Hartslag metingen ophalen
         measurementStatus = repository.initializeRepository(heartbeatFile);
         if (measurementStatus.getReturnCode() == 0){
             heartbeatList.addAll(repository.getMeasurementList());

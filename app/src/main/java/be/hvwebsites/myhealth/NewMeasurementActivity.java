@@ -32,6 +32,7 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_measurement);
+        // Koppel variabelen aan scherm componenten
         dateView = findViewById(R.id.newScrnValueDate);
         labelValue1View = findViewById(R.id.newScrnLabelWaarde1);
         value1View = findViewById(R.id.newScrnValueWaarde1);
@@ -41,6 +42,7 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
         value3View = findViewById(R.id.newScrnValueWaarde3);
         labelInstructionView = findViewById(R.id.newScrnInstruction);
 
+        // Vul vaste schermgegevens in
         // Data uit intent halen
         Intent msrmtIntent = getIntent();
         typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
@@ -67,22 +69,28 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
                 break;
         }
 
+        // Toevoeg button definitie
         final Button addbutton = findViewById(R.id.newScrnButtonToevoegen);
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Als op de toevoeg button geklikt is worden de gegevens, die ingevuld zijn
+                // op het scherm, in de intent doorgegeven
                 Intent replyIntent = new Intent(NewMeasurementActivity.this,
                         MListActivity.class);
                 if (TextUtils.isEmpty(dateView.getText()) ||
                         TextUtils.isEmpty(value1View.getText())){
+                    // Er zijn geen gegevens ingevuld
                     Toast.makeText(NewMeasurementActivity.this,
                             "Nothing entered, nothing saved !", Toast.LENGTH_LONG).show();
                 }else{
+                    // Er zijn gegevens ingevuld
                     String dateString = dateView.getText().toString();
                     Toast.makeText(NewMeasurementActivity.this,
                             "New measurement : " + dateString + " "
                                     + value1View.getText(),
                             Toast.LENGTH_LONG).show();
+                    // De gegevens worden in de intent ingevuld
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_DATE, dateString);
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
                             Float.parseFloat(String.valueOf(value1View.getText())));
@@ -104,6 +112,7 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
 
     @Override
     public void showDatePicker(View view) {
+        // Toont de datum picker, de gebruiker kan nu de datum picken
         DialogFragment newFragment = new DatePickerFragment();
         Bundle bundle = new Bundle();
         bundle.putString("Caller", typeMeasurement);
@@ -114,6 +123,7 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
 
     @Override
     public void processDatePickerResult(int year, int month, int day) {
+        // Verwerkt de gekozen datum uit de picker
         String month_string = Integer.toString(month+1);
         String day_string = Integer.toString(day);
         String year_string = Integer.toString(year);

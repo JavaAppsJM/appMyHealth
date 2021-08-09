@@ -24,7 +24,6 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
     private TextView labelValue3View;
     private EditText value3View;
     private TextView labelInstructionView;
-    private Button updateButtonView;
     private int indexToUpdate;
     private String typeMeasurement;
 
@@ -42,9 +41,8 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
         labelValue3View = findViewById(R.id.updateScrnLabelWaarde3);
         value3View = findViewById(R.id.updateScrnWaarde3);
         labelInstructionView = findViewById(R.id.updateScreenInstruction);
-//        updateButtonView = findViewById(R.id.updateScrnButtonAanpassen);
 
-        // Data uit intent halen
+        // Data uit intent halen om op scherm te tonen
         Intent msrmtIntent = getIntent();
         if (msrmtIntent.hasExtra(Measurement.EXTRA_INTENT_KEY_TYPE)){
             typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
@@ -64,7 +62,7 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
                     labelInstructionView.setText("Pas buikomtrek aan en druk AANPASSEN");
                     // Titel vn Activity nog wijzigen
                     setTitle("Aanpassen Buikomtrek");
-                    // Button ligging verhogen
+                    // TODO: Button ligging verhogen
 //                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams();
 //                    updateButtonView.setLayoutParams();
                     break;
@@ -87,12 +85,15 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
         updatebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Er is op AANPASSEN gedrukt, de aangepaste gegevens worden vh scherm gehaald
+                // en in de intent gestoken
                 // replyintent vr startActivity vn parent activity
                 Intent replyIntent = new Intent(
                         UpdateMeasurementActivity.super.getApplicationContext(),
                         MListActivity.class);
                 if (TextUtils.isEmpty(dateView.getText()) ||
                         TextUtils.isEmpty(value1View.getText())){
+                    // Er is niks ingevuld
                     Toast.makeText(UpdateMeasurementActivity.this,
                             "Nothing entered, nothing saved !", Toast.LENGTH_LONG).show();
                 }else{

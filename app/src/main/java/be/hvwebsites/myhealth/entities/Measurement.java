@@ -7,6 +7,7 @@ public class Measurement {
     private float measurementValue;
     private String remark; // initieel niet gebruikt
     private int dateInt;
+    // Intent doorgeef data definities via EXTRAS
     public static final String EXTRA_INTENT_KEY_ACTION =
             "be.hvwebsites.myhealth.EXTRA_INTENT_KEY_ACTION";
     public static final String EXTRA_INTENT_KEY_INDEX =
@@ -29,6 +30,7 @@ public class Measurement {
     }
 
     public void setMeasurement(Measurement measurement2){
+        // Zet de values van measurement2 in this measurement
         setMeasurementDate(measurement2.getMeasurementDate());
         this.measurementValue = measurement2.getMeasurementValue();
         setDateInt(measurement2.getDateInt());
@@ -81,12 +83,12 @@ public class Measurement {
         return "Meting{" +
                 "Datum = '" + measurementDate + '\'' +
                 ", Value ='" + measurementValue + '\'' +
-                ", dateInt =" + dateInt +
                 '}';
     }
 
     // Datum methodes
     private String trimDate(String inputDate){
+        // Haal de / uit de datum
         String[] dateStringParts = inputDate.split("/");
         String day = leadingZero(dateStringParts[0]);
         String month = leadingZero(dateStringParts[1]);
@@ -95,6 +97,7 @@ public class Measurement {
     }
 
     private String leadingZero(String string){
+        // Zet een leading zero indien die ontbreekt
         if (Integer.parseInt(string) < 10 && string.length() < 2){
             return  "0" + string;
         }else {
@@ -103,10 +106,10 @@ public class Measurement {
     }
 
     public String getFormatDate() {
+        // Zet / in de datum
         String day = measurementDate.substring(0,2);
         String month = measurementDate.substring(2,4);
         String year = measurementDate.substring(4);
         return day + "/" + month + "/" + year;
     }
-
 }

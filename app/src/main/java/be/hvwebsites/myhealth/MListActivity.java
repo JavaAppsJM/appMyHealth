@@ -29,6 +29,8 @@ import be.hvwebsites.myhealth.entities.BloodUpper;
 import be.hvwebsites.myhealth.entities.HeartBeat;
 import be.hvwebsites.myhealth.entities.Measurement;
 import be.hvwebsites.myhealth.helpers.MListLine;
+import be.hvwebsites.myhealth.repositories.Cookie;
+import be.hvwebsites.myhealth.repositories.CookieRepository;
 import be.hvwebsites.myhealth.returninfo.ReturnInfo;
 import be.hvwebsites.myhealth.viewmodels.MeasurementViewModel;
 
@@ -40,6 +42,7 @@ public class MListActivity extends AppCompatActivity {
     private TextView labelCol2Head;
     private TextView labelCol3Head;
     private TextView labelCol4Head;
+    public static final String TYPE_MEASUREMENT = "typemeasurement";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +52,13 @@ public class MListActivity extends AppCompatActivity {
         labelCol3Head = findViewById(R.id.mListColHead3);
         labelCol4Head = findViewById(R.id.mListColHead4);
 
-        // Data uit intent halen
-        Intent msrmtIntent = getIntent();
-        typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
-
-        // TODO: Bij terugkeer vn new/update via arrow dan is er geen typemeasurement gekend
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MListActivity.this,
-                        NewMeasurementActivity.class);
-                intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "insert");
-                intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, typeMeasurement);
-                startActivity(intent);
-            }
-        });
-
         // Recyclerview definieren
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final MeasurementListAdapter adapter = new MeasurementListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Data ophalen
         // Get a viewmodel from the viewmodelproviders
         measurementViewModel = ViewModelProviders.of(this).get(MeasurementViewModel.class);
         // Basis directory definitie
@@ -90,11 +76,38 @@ public class MListActivity extends AppCompatActivity {
                     "Loading Measurements failed",
                     Toast.LENGTH_LONG).show();
         }
+
+        // Data uit intent halen als die er is
+        Intent msrmtIntent = getIntent();
+        CookieRepository cookieRepository = new CookieRepository(baseDir);
+        if (msrmtIntent.hasExtra(Measurement.EXTRA_INTENT_KEY_TYPE)){
+            typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
+            // typeMeasurement in cookie steken
+            cookieRepository.addCookie(new Cookie(TYPE_MEASUREMENT, typeMeasurement));
+        }else {
+            // er is geen intent, typemeasurement ophalen als Cookie
+            typeMeasurement = cookieRepository.getCookieValueFromLabel(TYPE_MEASUREMENT);
+        }
+
+        // fab definieren voor een meting toe te voegen
+        // We doen pas hier omdat typeMeasurement moet gekend zijn
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MListActivity.this,
+                        NewMeasurementActivity.class);
+                intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "insert");
+                intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, typeMeasurement);
+                startActivity(intent);
+            }
+        });
+
         // data zit nu measurementViewModel, tonen op scherm afhankelijk vn type
         switch (typeMeasurement) {
             case "belly":
                 // Zet kolom titels
-                labelCol2Head.setText("Buikomtrek");
+                labelCol2Head.setText(getResources().getText(R.string.belly_radius_input_label));
                 labelCol3Head.setVisibility(View.INVISIBLE);
                 labelCol4Head.setVisibility(View.INVISIBLE);
 
