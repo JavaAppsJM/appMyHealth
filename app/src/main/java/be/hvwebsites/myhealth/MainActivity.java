@@ -1,22 +1,31 @@
 package be.hvwebsites.myhealth;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import be.hvwebsites.myhealth.entities.Measurement;
-import be.hvwebsites.myhealth.repositories.MeasurementRepository;
 import be.hvwebsites.myhealth.returninfo.ReturnInfo;
 import be.hvwebsites.myhealth.viewmodels.MeasurementViewModel;
+
+/*
+//TODO: Dit project is gecloned van GitHub via "Get From VCS" en dient nog gecorrigeerd te worden
+De versie die op GSM staat is flexiapptry en is iets uitgebreider in functionaliteit. Ik heb geen
+zicht op wat er meer kan. De fout vn ViewModelProviders is waarschijnlijk wel opgelost.
+De data in de app is testdata en kan dus gemist worden.
+
+Conclusie: versie flexiapptry op GSM mag opgegeven worden indien nodig en we gaan verder met
+dit project.
+
+Verdere stappen:
+- Corrigeren en uptodate brengen van deze versie tot een werkbare app
+- Uitbreiding om een lijstje te mailen nr een emailadres (ve doctor)
+ */
 
 public class MainActivity extends AppCompatActivity {
     private MeasurementViewModel measurementViewModel;
