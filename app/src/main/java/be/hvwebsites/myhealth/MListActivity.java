@@ -38,9 +38,6 @@ public class MListActivity extends AppCompatActivity {
     private MeasurementViewModel measurementViewModel;
     private List<MListLine> lineList = new ArrayList<>();
     private String typeMeasurement;
-    private TextView labelCol2Head;
-    private TextView labelCol3Head;
-    private TextView labelCol4Head;
     public static final String TYPE_MEASUREMENT = "typemeasurement";
     // Device
     private final String deviceModel = Build.MODEL;
@@ -49,9 +46,9 @@ public class MListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mlist);
-        labelCol2Head = findViewById(R.id.mListColHead2);
-        labelCol3Head = findViewById(R.id.mListColHead3);
-        labelCol4Head = findViewById(R.id.mListColHead4);
+        TextView labelCol2Head = findViewById(R.id.mListColHead2);
+        TextView labelCol3Head = findViewById(R.id.mListColHead3);
+        TextView labelCol4Head = findViewById(R.id.mListColHead4);
 
         // Recyclerview definieren
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -103,7 +100,8 @@ public class MListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MListActivity.this,
                         NewMeasurementActivity.class);
-                intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "insert");
+                intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION,
+                        getResources().getText(R.string.Insert));
                 intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, typeMeasurement);
                 startActivity(intent);
             }
