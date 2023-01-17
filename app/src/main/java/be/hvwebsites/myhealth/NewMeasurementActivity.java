@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +28,8 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
     private EditText value3View;
     private TextView labelInstructionView;
     private String typeMeasurement;
+    // Device
+    private final String deviceModel = Build.MODEL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

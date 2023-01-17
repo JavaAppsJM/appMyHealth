@@ -1,23 +1,21 @@
 package be.hvwebsites.myhealth;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +30,7 @@ import be.hvwebsites.myhealth.helpers.MListLine;
 import be.hvwebsites.myhealth.repositories.Cookie;
 import be.hvwebsites.myhealth.repositories.CookieRepository;
 import be.hvwebsites.myhealth.returninfo.ReturnInfo;
+import be.hvwebsites.myhealth.services.FileBaseService;
 import be.hvwebsites.myhealth.viewmodels.MeasurementViewModel;
 
 
@@ -43,6 +42,8 @@ public class MListActivity extends AppCompatActivity {
     private TextView labelCol3Head;
     private TextView labelCol4Head;
     public static final String TYPE_MEASUREMENT = "typemeasurement";
+    // Device
+    private final String deviceModel = Build.MODEL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,16 @@ public class MListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Creer een filebase service (bevat file base en file base directory) obv device en package name
+        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName());
+
+        // Basis directory definitie
+        String baseDir = fileBaseService.getFileBaseDir();
+
         // Data ophalen
         // Get a viewmodel from the viewmodelproviders
-        measurementViewModel = ViewModelProviders.of(this).get(MeasurementViewModel.class);
-        // Basis directory definitie
-        String baseDir = getBaseContext().getExternalFilesDir(null).getAbsolutePath();
+        measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
+        //measurementViewModel = ViewModelProviders.of(this).get(MeasurementViewModel.class);
         // Initialize viewmodel mt basis directory (data wordt opgehaald in viewmodel)
         ReturnInfo viewModelStatus = measurementViewModel.initializeMViewModel(baseDir);
         if (viewModelStatus.getReturnCode() == 0) {
