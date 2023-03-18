@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import be.hvwebsites.myhealth.entities.Measurement;
-import be.hvwebsites.myhealth.returninfo.ReturnInfo;
+import be.hvwebsites.myhealth.helpers.ReturnInfo;
 
 public class MeasurementRepository {
     private Measurement latestMeasurement;
-    private Measurement readMeasurement;
     private List<Measurement> measurementList;
 
     public MeasurementRepository(){
@@ -34,12 +33,15 @@ public class MeasurementRepository {
         ReturnInfo metingToestand = fileNrMeasurementList(mFile);
         if (metingToestand.getReturnCode() == 0){
             // Metingfile lezen is gelukt en metingen zitten in List
-            // Bepaal latest meting
-            latestMeasurement = readMeasurement;
-            for (int j = 0; j < measurementList.size() ; j++) {
-                if (latestMeasurement.getDateInt() < measurementList.get(j).getDateInt()){
-                    latestMeasurement = measurementList.get(j);
+            if (measurementList.size() > 0){
+                latestMeasurement.setMeasurement(measurementList.get(measurementList.size()-1));
+                for (int j = 0; j < measurementList.size() ; j++) {
+                    if (latestMeasurement.getDateInt() < measurementList.get(j).getDateInt()){
+                        latestMeasurement.setMeasurement(measurementList.get(j));
+                    }
                 }
+            }else {
+                // Geen metingen
             }
         }else if (metingToestand.getReturnCode() == 100){
             // Geen metingen
@@ -50,17 +52,18 @@ public class MeasurementRepository {
     }
 
     public ReturnInfo fileNrMeasurementList(File metingFile){
-        ReturnInfo returnInfo = new ReturnInfo(0);
+        ReturnInfo returnInfo = new ReturnInfo(0, "");
         // Meting File lezen
         if (metingFile.exists()){
             try {
                 Scanner inFile = new Scanner(metingFile);
                 int i = 0;
                 while (inFile.hasNext()){
-                    readMeasurement = getMetingFromFileLine(inFile.nextLine());
-                    measurementList.add(readMeasurement);
+                    //readMeasurement = getMetingFromFileLine(inFile.nextLine());
+                    measurementList.add(new Measurement(inFile.nextLine()));
                     i++;
                 }
+                //latestMeasurement = measurementList.get(measurementList.size()-1);
                 inFile.close();
                 return returnInfo;
             } catch (FileNotFoundException e) {
@@ -78,32 +81,16 @@ public class MeasurementRepository {
         }
     }
 
-    public Measurement getMetingFromFileLine(String fileLine){
-        Measurement measurement = new Measurement();
-        // fileLine splitsen in argumenten
-        String[] fileLineContent = fileLine.split("<");
-        for (int i = 0; i < fileLineContent.length; i++) {
-            // TODO: date.* in een static zetten
-            if (fileLineContent[i].matches("date.*")){
-                measurement.setMeasurementDate(fileLineContent[i+1].replace(">",""));
-            }
-            // TODO: measurement.* in een static zetten
-            if (fileLineContent[i].matches("measurement.*")){
-                measurement.setMeasurementValue(Float.valueOf(fileLineContent[i+1].replace(">","")));
-            }
-        }
-        return measurement;
-    }
-
     public boolean storeMeasurements(File metingFile, List<Measurement> measurementList){
         // Sorteren
-        List<Measurement> sortedMeasurements = sortMetingen(measurementList);
+        List<Measurement> sortedMeasurements = sortMeasurements(measurementList);
 
         // Wegschrijven nr file
         try {
             PrintWriter outFile = new PrintWriter(metingFile);
             for (int i = 0; i < sortedMeasurements.size(); i++) {
-                outFile.println(makeFileLine(sortedMeasurements.get(i)));
+                outFile.println(sortedMeasurements.get(i).convertToFileLine());
+                //outFile.println(makeFileLine(sortedMeasurements.get(i)));
             }
             outFile.close();
             return true;
@@ -113,7 +100,7 @@ public class MeasurementRepository {
         }
     }
 
-    public List<Measurement> sortMetingen(List<Measurement> measurementList){
+    public List<Measurement> sortMeasurements(List<Measurement> measurementList){
         Measurement tmpMeasurement = new Measurement();
         for (int j = 0; j < measurementList.size()-1; j++) {
             for (int i = measurementList.size()-2; i >= j ; i--) {
@@ -127,11 +114,28 @@ public class MeasurementRepository {
         return measurementList;
     }
 
+/*
     public String makeFileLine(Measurement measurement){
-        // TODO: date.* en measurement.* in een static zetten
         String fileLine = "<date><" + measurement.getMeasurementDate()
                 + "><measurement><" + String.valueOf(measurement.getMeasurementValue()) + ">";
         return fileLine;
     }
+*/
 
+/*
+    public Measurement getMetingFromFileLine(String fileLine){
+        Measurement measurement = new Measurement();
+        // fileLine splitsen in argumenten
+        String[] fileLineContent = fileLine.split("<");
+        for (int i = 0; i < fileLineContent.length; i++) {
+            if (fileLineContent[i].matches("date.*")){
+                measurement.setMeasurementDate(fileLineContent[i+1].replace(">",""));
+            }
+            if (fileLineContent[i].matches("measurement.*")){
+                measurement.setMeasurementValue(Float.valueOf(fileLineContent[i+1].replace(">","")));
+            }
+        }
+        return measurement;
+    }
+*/
 }

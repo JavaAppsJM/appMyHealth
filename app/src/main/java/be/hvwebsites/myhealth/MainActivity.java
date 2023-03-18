@@ -10,8 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.List;
+
+import be.hvwebsites.myhealth.constants.GlobalConstant;
 import be.hvwebsites.myhealth.entities.Measurement;
-import be.hvwebsites.myhealth.returninfo.ReturnInfo;
+import be.hvwebsites.myhealth.helpers.ReturnInfo;
 import be.hvwebsites.myhealth.services.FileBaseService;
 import be.hvwebsites.myhealth.viewmodels.MeasurementViewModel;
 
@@ -55,25 +58,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Viewmodel definitie
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
-        //measurementViewModel = ViewModelProviders.of(this).get(MeasurementViewModel.class);
         // Initialize viewmodel met basis directory (data ophalen in viewmodel)
-        ReturnInfo viewModelStatus = measurementViewModel.initializeMViewModel(baseDir);
-        if (viewModelStatus.getReturnCode() == 0) {
+        List<ReturnInfo> viewModelRetInfo = measurementViewModel.initializeMViewModel(baseDir);
+        for (int i = 0; i < viewModelRetInfo.size(); i++) {
+            Toast.makeText(MainActivity.this,
+                    viewModelRetInfo.get(i).getReturnMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        if (!measurementViewModel.isErrorViewModel()) {
             // Data zit in viewmodel, laatste metingen uit view model halen
             belly = measurementViewModel.getLatestBelly();
             upperP = measurementViewModel.getLatestUpperP();
             lowerP = measurementViewModel.getLatestLowerP();
             heartbeat = measurementViewModel.getLatestHeartbeat();
-        } else if (viewModelStatus.getReturnCode() == 100) {
-            // 1 of meerdere files niet gevonden
-            Toast.makeText(MainActivity.this,
-                    viewModelStatus.getReturnMessage(),
-                    Toast.LENGTH_LONG).show();
         } else {
             // Ophalen data in view model mislukt
             Toast.makeText(MainActivity.this,
                     "Loading Measurements failed",
                     Toast.LENGTH_LONG).show();
+            //TODO: Wat moet er nu gebeuren ??
         }
 
         // Data manipuleren om op scherm te zetten
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             // Er zijn bellies
             latestMText = belly.getDateAndValue();
         }else {
-            latestMText = "Empty";
+            latestMText = GlobalConstant.EMPTY;
         }
         if (upperP != null && belly == null){
             // Er zijn bloeddruk metingen mr geen bellies
@@ -94,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
             latestMText = latestMText.concat(" ; ").concat(heartbeat.getValueAsString());
         } else {
             // Er zijn geen bloeddruk metingen
-            latestMText = latestMText.concat(" ; ").concat("Empty");
-            latestMText = latestMText.concat(" ; ").concat("Empty");
-            latestMText = latestMText.concat(" ; ").concat("Empty");
+            latestMText = latestMText.concat(" ; ").concat(GlobalConstant.EMPTY);
+            latestMText = latestMText.concat(" ; ").concat(GlobalConstant.EMPTY);
+            latestMText = latestMText.concat(" ; ").concat(GlobalConstant.EMPTY);
         }
         // Zet samengestelde gegevens op het scherm
         latestMeasurementsView.setText(latestMText);
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         // Ongeacht of er measuremts zijn, ga naar MListActivity. Indien er measurements zijn
         // worden ze getoond anders wordt er naar NewMeasurementsActivity gegaan
         Intent intent = new Intent(this, MListActivity.class);
-        intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, "belly");
+        intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, GlobalConstant.CASE_BELLY);
         startActivity(intent);
     }
 
@@ -116,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         // Ongeacht of er measuremts zijn, ga naar MListActivity. Indien er measurements zijn
         // worden ze getoond anders wordt er naar NewMeasurementsActivity gegaan
         Intent intent = new Intent(this, MListActivity.class);
-        intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, "blood");
+        intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, GlobalConstant.CASE_BLOOD);
         startActivity(intent);
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import be.hvwebsites.myhealth.returninfo.ReturnInfo;
+import be.hvwebsites.myhealth.helpers.ReturnInfo;
 
 public class CookieRepository {
     private List<Cookie> cookieList = new ArrayList<>();
@@ -60,7 +60,7 @@ public class CookieRepository {
     }
 
     public ReturnInfo readCookies(){
-        ReturnInfo returnInfo = new ReturnInfo(0);
+        ReturnInfo returnInfo = new ReturnInfo(0, "");
         // Cookie File lezen
         if (cookieFile.exists()){
             try {

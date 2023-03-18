@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import be.hvwebsites.myhealth.entities.Belly;
-import be.hvwebsites.myhealth.entities.BloodPressureM;
+import be.hvwebsites.myhealth.constants.GlobalConstant;
+import be.hvwebsites.myhealth.helpers.BloodPressureM;
 import be.hvwebsites.myhealth.entities.Measurement;
 
 public class UpdateMeasurementActivity extends AppCompatActivity {
@@ -49,33 +49,33 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
             Measurement oldMeasurement = new Measurement(
                     msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),
                     msrmtIntent.getFloatExtra(Measurement.EXTRA_INTENT_KEY_VALUE, 0));
-            dateView.setText(oldMeasurement.getFormatDate());
+            dateView.setText(oldMeasurement.getFormatMsrmtDate());
             value1View.setText(String.valueOf(oldMeasurement.getMeasurementValue()));
             indexToUpdate = msrmtIntent.getIntExtra(Measurement.EXTRA_INTENT_KEY_INDEX, 0);
             switch (typeMeasurement) {
                 case "belly":
-                    labelValue1View.setText("Buikomtrek:");
+                    labelValue1View.setText(GlobalConstant.LABEL_BELLY_COLON);
                     labelValue2View.setVisibility(View.INVISIBLE);
                     value2View.setVisibility(View.INVISIBLE);
                     labelValue3View.setVisibility(View.INVISIBLE);
                     value3View.setVisibility(View.INVISIBLE);
-                    labelInstructionView.setText("Pas buikomtrek aan en druk AANPASSEN");
+                    labelInstructionView.setText(GlobalConstant.INSTRUCTION_UPDATE_BELLY);
                     // Titel vn Activity nog wijzigen
-                    setTitle("Aanpassen Buikomtrek");
+                    setTitle(GlobalConstant.TITLE_UPDATE_BELLY);
                     // TODO: Button ligging verhogen
 //                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams();
 //                    updateButtonView.setLayoutParams();
                     break;
                 case "blood":
-                    labelValue1View.setText("Bovendruk:");
+                    labelValue1View.setText(GlobalConstant.LABEL_UPPER_COLON);
                     value1View.setText(String.valueOf(msrmtIntent.getFloatExtra(BloodPressureM.EXTRA_INTENT_KEY_UPPER, 0)));
-                    labelValue2View.setText("Onderdruk:");
+                    labelValue2View.setText(GlobalConstant.LABEL_LOWER_COLON);
                     value2View.setText(String.valueOf(msrmtIntent.getFloatExtra(BloodPressureM.EXTRA_INTENT_KEY_LOWER, 0)));
-                    labelValue3View.setText("Hartslag:");
+                    labelValue3View.setText(GlobalConstant.LABEL_HEARTBEAT_COLON);
                     value3View.setText(String.valueOf(msrmtIntent.getFloatExtra(BloodPressureM.EXTRA_INTENT_KEY_HEARTB, 0)));
-                    labelInstructionView.setText("Pas waarden aan en druk op AANPASSEN");
+                    labelInstructionView.setText(GlobalConstant.INSTRUCTION_UPDATE_BLOOD);
                     // Titel vn Activity nog wijzigen
-                    setTitle("Aanpassen Bloeddruk Meting");
+                    setTitle(GlobalConstant.TITLE_UPDATE_BLOOD);
                     break;
             }
         }
@@ -103,9 +103,9 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
                             Float.parseFloat(String.valueOf(value1View.getText())));
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_INDEX, indexToUpdate);
-                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "update");
+                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, GlobalConstant.ACTION_UPDATE);
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, typeMeasurement);
-                    if (typeMeasurement.equals("blood")){
+                    if (typeMeasurement.equals(GlobalConstant.CASE_BLOOD)){
                         replyIntent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_UPPER,
                                 Float.parseFloat(String.valueOf(value1View.getText())));
                         replyIntent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_LOWER,

@@ -14,7 +14,8 @@ import java.util.List;
 
 import be.hvwebsites.myhealth.R;
 import be.hvwebsites.myhealth.UpdateMeasurementActivity;
-import be.hvwebsites.myhealth.entities.BloodPressureM;
+import be.hvwebsites.myhealth.constants.GlobalConstant;
+import be.hvwebsites.myhealth.helpers.BloodPressureM;
 import be.hvwebsites.myhealth.entities.Measurement;
 import be.hvwebsites.myhealth.helpers.MListLine;
 
@@ -48,15 +49,15 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
             MListLine current = lineList.get(indexToUpdate);
 
             Intent intent = new Intent(mContext, UpdateMeasurementActivity.class);
-            intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "update");
+            intent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, GlobalConstant.ACTION_UPDATE);
             intent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, current.getmType());
             intent.putExtra(Measurement.EXTRA_INTENT_KEY_DATE, current.getFormatDate());
             intent.putExtra(Measurement.EXTRA_INTENT_KEY_INDEX, indexToUpdate);
             switch (current.getmType()){
-                case "belly":
+                case GlobalConstant.CASE_BELLY:
                     intent.putExtra(Measurement.EXTRA_INTENT_KEY_VALUE, current.getmValue1());
                     break;
-                case "blood":
+                case GlobalConstant.CASE_BLOOD:
                     intent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_UPPER, current.getmValue2());
                     intent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_LOWER, current.getmValue3());
                     intent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_HEARTB, current.getmValue4());
@@ -77,12 +78,12 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
         if (lineList != null){
             MListLine current = lineList.get(position);
             String listTextLine = "";
-            if (current.getmType() == "belly"){
+            if (current.getmType() == GlobalConstant.CASE_BELLY){
                 listTextLine = current.getFormatDate()
                         + " : "
                         + current.getmValue1()
                         + " cm ";
-            }else if (current.getmType() == "blood"){
+            }else if (current.getmType() == GlobalConstant.CASE_BLOOD){
                 listTextLine = current.getFormatDate()
                         + " : "
                         + current.getmValue2()

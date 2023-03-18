@@ -1,4 +1,4 @@
-package be.hvwebsites.myhealth;
+package be.hvwebsites.myhealth.interfaces;
 
 import android.view.View;
 

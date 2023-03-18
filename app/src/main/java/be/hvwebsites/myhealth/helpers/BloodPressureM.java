@@ -1,4 +1,6 @@
-package be.hvwebsites.myhealth.entities;
+package be.hvwebsites.myhealth.helpers;
+
+import be.hvwebsites.myhealth.entities.Measurement;
 
 public class BloodPressureM {
     private String measurementDate;

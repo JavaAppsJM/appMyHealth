@@ -20,16 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.hvwebsites.myhealth.adapters.MeasurementListAdapter;
+import be.hvwebsites.myhealth.constants.GlobalConstant;
 import be.hvwebsites.myhealth.entities.Belly;
 import be.hvwebsites.myhealth.entities.BloodLower;
-import be.hvwebsites.myhealth.entities.BloodPressureM;
+import be.hvwebsites.myhealth.helpers.BloodPressureM;
 import be.hvwebsites.myhealth.entities.BloodUpper;
 import be.hvwebsites.myhealth.entities.HeartBeat;
 import be.hvwebsites.myhealth.entities.Measurement;
 import be.hvwebsites.myhealth.helpers.MListLine;
 import be.hvwebsites.myhealth.repositories.Cookie;
 import be.hvwebsites.myhealth.repositories.CookieRepository;
-import be.hvwebsites.myhealth.returninfo.ReturnInfo;
+import be.hvwebsites.myhealth.helpers.ReturnInfo;
 import be.hvwebsites.myhealth.services.FileBaseService;
 import be.hvwebsites.myhealth.viewmodels.MeasurementViewModel;
 
@@ -65,19 +66,12 @@ public class MListActivity extends AppCompatActivity {
         // Data ophalen
         // Get a viewmodel from the viewmodelproviders
         measurementViewModel = new ViewModelProvider(this).get(MeasurementViewModel.class);
-        //measurementViewModel = ViewModelProviders.of(this).get(MeasurementViewModel.class);
         // Initialize viewmodel mt basis directory (data wordt opgehaald in viewmodel)
-        ReturnInfo viewModelStatus = measurementViewModel.initializeMViewModel(baseDir);
-        if (viewModelStatus.getReturnCode() == 0) {
-            // Files gelezen
-        } else if (viewModelStatus.getReturnCode() == 100) {
+        List<ReturnInfo> viewModelRetInfo = measurementViewModel.initializeMViewModel(baseDir);
+        for (int i = 0; i < viewModelRetInfo.size(); i++) {
             Toast.makeText(MListActivity.this,
-                    viewModelStatus.getReturnMessage(),
-                    Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(MListActivity.this,
-                    "Loading Measurements failed",
-                    Toast.LENGTH_LONG).show();
+                    viewModelRetInfo.get(i).getReturnMessage(),
+                    Toast.LENGTH_SHORT).show();
         }
 
         // Data uit intent halen als die er is
@@ -109,7 +103,7 @@ public class MListActivity extends AppCompatActivity {
 
         // data zit nu measurementViewModel, tonen op scherm afhankelijk vn type
         switch (typeMeasurement) {
-            case "belly":
+            case GlobalConstant.CASE_BELLY:
                 // Zet kolom titels
                 labelCol2Head.setText(getResources().getText(R.string.belly_radius_input_label));
                 labelCol3Head.setVisibility(View.INVISIBLE);
@@ -117,26 +111,24 @@ public class MListActivity extends AppCompatActivity {
 
                 lineList = fillLineListWithBellies(measurementViewModel.getBellyList());
                 adapter.setLineList(lineList);
-                // TODO: zet text in strings ?
-                setTitle("Buikomtrek Metingen");
+                setTitle(GlobalConstant.TITLE_BELLIES);
                 // TODO: Button ligging verhogen
 //                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams();
 //                    updateButtonView.setLayoutParams();
                 break;
-            case "blood":
+            case GlobalConstant.CASE_BLOOD:
                 // Zet kolom titels
-                labelCol2Head.setText("Bovendruk");
+                labelCol2Head.setText(GlobalConstant.LABEL_UPPER);
                 labelCol3Head.setVisibility(View.VISIBLE);
-                labelCol3Head.setText("Onderdruk");
+                labelCol3Head.setText(GlobalConstant.LABEL_LOWER);
                 labelCol4Head.setVisibility(View.VISIBLE);
-                labelCol4Head.setText("Hartslag");
+                labelCol4Head.setText(GlobalConstant.LABEL_HEARTBEAT);
 
                 lineList = fillLineListWithBlood(measurementViewModel.getUpperMList(),
                         measurementViewModel.getLowerMList(),
                         measurementViewModel.getHeartbeatList());
                 adapter.setLineList(lineList);
-                // TODO: zet text in strings ?
-                setTitle("Bloeddruk Metingen");
+                setTitle(GlobalConstant.TITLE_BLOOD);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + typeMeasurement);
@@ -162,14 +154,14 @@ public class MListActivity extends AppCompatActivity {
                         // LineList aanpassen
                         lineList.remove(currentLine);
                         switch (currentLine.getmType()){
-                            case "belly":
+                            case GlobalConstant.CASE_BELLY:
                                 dMeasurement = currentLine.findCorM(measurementViewModel.getBellyList());
                                 // Verwijder belly uit bellylist
                                 measurementViewModel.removeBellyFromList(dMeasurement);
                                 // Store bellies in file
                                 measurementViewModel.storeBellies();
                                 break;
-                            case "blood":
+                            case GlobalConstant.CASE_BLOOD:
                                 // Upper pressure deleten
                                 dMeasurement = currentLine.findCorM(measurementViewModel.getUpperMList());
                                 // Verwijder upper uit list
@@ -201,9 +193,9 @@ public class MListActivity extends AppCompatActivity {
         if (msrmtIntent.hasExtra(Measurement.EXTRA_INTENT_KEY_ACTION)) {
             String action = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_ACTION);
             typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
-            if (action.equals("update")){
+            if (action.equals(GlobalConstant.ACTION_UPDATE)){
                 switch (typeMeasurement){
-                    case "belly":
+                    case GlobalConstant.CASE_BELLY:
                         Belly newBelly = new Belly(
                                 msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),
                                 msrmtIntent.getFloatExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
@@ -216,7 +208,7 @@ public class MListActivity extends AppCompatActivity {
                         lineList = fillLineListWithBellies(measurementViewModel.getBellyList());
                         adapter.setLineList(lineList);
                         break;
-                    case "blood":
+                    case GlobalConstant.CASE_BLOOD:
                         // upperpressure
                         BloodUpper newUpperP = new BloodUpper(
                                 msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),
@@ -249,9 +241,9 @@ public class MListActivity extends AppCompatActivity {
                         adapter.setLineList(lineList);
                         break;
                 }
-            } else if (action.equals("insert")){
+            } else if (action.equals(GlobalConstant.ACTION_INSERT)){
                 switch (typeMeasurement){
-                    case "belly":
+                    case GlobalConstant.CASE_BELLY:
                         Measurement newBelly = new Belly(
                                 msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),
                                 msrmtIntent.getFloatExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
@@ -269,7 +261,7 @@ public class MListActivity extends AppCompatActivity {
                             adapter.setLineList(fillLineListWithBellies(measurementViewModel.getBellyList()));
                         }
                         break;
-                    case "blood":
+                    case GlobalConstant.CASE_BLOOD:
                         // upperpressure
                         Measurement newUpper = new BloodUpper(
                                 msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),

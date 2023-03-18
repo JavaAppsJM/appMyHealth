@@ -1,4 +1,4 @@
-package be.hvwebsites.myhealth;
+package be.hvwebsites.myhealth.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+
+import be.hvwebsites.myhealth.interfaces.NewDatePickerInterface;
 
 /**
  * A simple {@link Fragment} subclass.

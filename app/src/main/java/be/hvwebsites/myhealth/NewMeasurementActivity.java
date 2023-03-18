@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import be.hvwebsites.myhealth.entities.Belly;
-import be.hvwebsites.myhealth.entities.BloodPressureM;
+import be.hvwebsites.myhealth.constants.GlobalConstant;
+import be.hvwebsites.myhealth.helpers.BloodPressureM;
 import be.hvwebsites.myhealth.entities.Measurement;
+import be.hvwebsites.myhealth.fragments.DatePickerFragment;
+import be.hvwebsites.myhealth.interfaces.NewDatePickerInterface;
 
 public class NewMeasurementActivity extends AppCompatActivity implements NewDatePickerInterface {
     private EditText dateView;
@@ -49,26 +51,26 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
         // Data uit intent halen
         Intent msrmtIntent = getIntent();
         typeMeasurement = msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_TYPE);
-        labelInstructionView.setText("Vul in en druk op TOEVOEGEN");
+        labelInstructionView.setText(GlobalConstant.INSTRUCTION_NEW);
         switch (typeMeasurement) {
-            case "belly":
-                labelValue1View.setText("Buikomtrek:");
+            case GlobalConstant.CASE_BELLY:
+                labelValue1View.setText(GlobalConstant.LABEL_BELLY_COLON);
                 labelValue2View.setVisibility(View.INVISIBLE);
                 value2View.setVisibility(View.INVISIBLE);
                 labelValue3View.setVisibility(View.INVISIBLE);
                 value3View.setVisibility(View.INVISIBLE);
                 // Titel vn Activity nog wijzigen
-                setTitle("Toevoegen Buikomtrek Meting");
+                setTitle(GlobalConstant.TITLE_ADD_BELLY);
                 // Button ligging verhogen
 //                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams();
 //                    updateButtonView.setLayoutParams();
                 break;
-            case "blood":
-                labelValue1View.setText("Bovendruk:");
-                labelValue2View.setText("Onderdruk:");
-                labelValue3View.setText("Hartslag:");
+            case GlobalConstant.CASE_BLOOD:
+                labelValue1View.setText(GlobalConstant.LABEL_UPPER_COLON);
+                labelValue2View.setText(GlobalConstant.LABEL_LOWER_COLON);
+                labelValue3View.setText(GlobalConstant.LABEL_HEARTBEAT_COLON);
                 // Titel vn Activity nog wijzigen
-                setTitle("Toevoegen Bloeddruk Meting");
+                setTitle(GlobalConstant.TITLE_ADD_BLOOD);
                 break;
         }
 
@@ -97,9 +99,9 @@ public class NewMeasurementActivity extends AppCompatActivity implements NewDate
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_DATE, dateString);
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_VALUE,
                             Float.parseFloat(String.valueOf(value1View.getText())));
-                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, "insert");
+                    replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_ACTION, GlobalConstant.ACTION_INSERT);
                     replyIntent.putExtra(Measurement.EXTRA_INTENT_KEY_TYPE, typeMeasurement);
-                    if (typeMeasurement.equals("blood")){
+                    if (typeMeasurement.equals(GlobalConstant.CASE_BLOOD)){
                         replyIntent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_UPPER,
                                 Float.parseFloat(String.valueOf(value1View.getText())));
                         replyIntent.putExtra(BloodPressureM.EXTRA_INTENT_KEY_LOWER,

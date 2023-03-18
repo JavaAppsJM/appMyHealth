@@ -3,6 +3,7 @@ package be.hvwebsites.myhealth.helpers;
 import java.util.List;
 import java.util.Optional;
 
+import be.hvwebsites.myhealth.constants.GlobalConstant;
 import be.hvwebsites.myhealth.entities.Measurement;
 
 public class MListLine {
@@ -23,13 +24,13 @@ public class MListLine {
         if (belly != null){
             mDate = belly.getMeasurementDate();
             mValue1 = belly.getMeasurementValue();
-            mType = "belly";
+            mType = GlobalConstant.CASE_BELLY;
         } else if (upperP != null && lowerP != null && heartbeatP != null ){
             mDate = upperP.getMeasurementDate();
             mValue2 = upperP.getMeasurementValue();
             mValue3 = lowerP.getMeasurementValue();
             mValue4 = heartbeatP.getMeasurementValue();
-            mType = "blood";
+            mType = GlobalConstant.CASE_BLOOD;
         }else {
             // geen belly noch blood
         }
@@ -38,7 +39,7 @@ public class MListLine {
     public void fillListLineWBelly(Measurement belly){
         mDate = belly.getMeasurementDate();
         mValue1 = belly.getMeasurementValue();
-        mType = "belly";
+        mType = GlobalConstant.CASE_BELLY;
     }
 
     public void fillListLineWBlood(Measurement upperP,
@@ -48,7 +49,7 @@ public class MListLine {
         mValue2 = upperP.getMeasurementValue();
         mValue3 = lowerP.getMeasurementValue();
         mValue4 = heartbeatP.getMeasurementValue();
-        mType = "blood";
+        mType = GlobalConstant.CASE_BLOOD;
     }
 
     public Measurement findCorM(List<Measurement> measurementList){
