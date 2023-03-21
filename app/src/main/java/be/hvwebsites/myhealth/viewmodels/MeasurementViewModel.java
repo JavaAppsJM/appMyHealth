@@ -10,6 +10,7 @@ import java.util.List;
 
 import be.hvwebsites.myhealth.constants.GlobalConstant;
 import be.hvwebsites.myhealth.entities.Measurement;
+import be.hvwebsites.myhealth.helpers.BloodPressureM;
 import be.hvwebsites.myhealth.helpers.DateString;
 import be.hvwebsites.myhealth.repositories.MeasurementRepository;
 import be.hvwebsites.myhealth.helpers.ReturnInfo;
@@ -106,10 +107,16 @@ public class MeasurementViewModel extends AndroidViewModel {
     }
 
     public List<String> getMeasurementsForEmail(String minimumDate, boolean alreadySent){
+        // Lists de measurements to send
+        // minimumDate format ex: 01022022
+        // alreadySent : true als de metingen die reeds verstuurd zijn terug mogen gestuurd worden
         List<String> resultList = new ArrayList<>();
         for (int i = 0; i < upperMList.size(); i++) {
-            if (minimumDate != null && upperMList.get(i).getDateInt() > new DateString(minimumDate).getIntDate()){
-
+            if ((minimumDate == null || upperMList.get(i).getDateInt() > new DateString(minimumDate).getIntDate())
+            && (alreadySent || upperMList.get(i).getLatestEmailDate() == null)){
+                // Meting mag verstuurd worden
+                resultList.add(new BloodPressureM(upperMList.get(i), lowerMList.get(i), heartbeatList.get(i))
+                        .getEmailString());
             }
         }
         return resultList;

@@ -49,7 +49,7 @@ public class UpdateMeasurementActivity extends AppCompatActivity {
             Measurement oldMeasurement = new Measurement(
                     msrmtIntent.getStringExtra(Measurement.EXTRA_INTENT_KEY_DATE),
                     msrmtIntent.getFloatExtra(Measurement.EXTRA_INTENT_KEY_VALUE, 0));
-            dateView.setText(oldMeasurement.getFormatMsrmtDate());
+            dateView.setText(oldMeasurement.getMeasurementDateFormatted());
             value1View.setText(String.valueOf(oldMeasurement.getMeasurementValue()));
             indexToUpdate = msrmtIntent.getIntExtra(Measurement.EXTRA_INTENT_KEY_INDEX, 0);
             switch (typeMeasurement) {

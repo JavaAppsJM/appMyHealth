@@ -57,7 +57,7 @@ public class DateString {
     }
 
     // Datum methodes
-    private String trimDate(String inputDate){
+    private static String trimDate(String inputDate){
         // Haal de / uit de datum
         String[] dateStringParts = inputDate.split("/");
         String day = leadingZero(dateStringParts[0]);
@@ -66,7 +66,7 @@ public class DateString {
         return day + month + year;
     }
 
-    private String leadingZero(String string){
+    private static String leadingZero(String string){
         // Zet een leading zero indien die ontbreekt
         if (Integer.parseInt(string) < 10 && string.length() < 2){
             return  "0" + string;
@@ -101,7 +101,7 @@ public class DateString {
         return calendarDate;
     }
 
-    private String getDateFromMillis(long inMillis){
+    private static String getDateFromMillis(long inMillis){
         Calendar calendarDate = Calendar.getInstance();
         calendarDate.setTimeInMillis(inMillis);
 
@@ -184,7 +184,7 @@ public class DateString {
         return false;
     }
 
-    private boolean isDatePattern(@NonNull String inString){
+    private static boolean isDatePattern(@NonNull String inString){
         boolean result = false;
 
         if (inString.matches("\\d{2}/\\d{2}/\\d{4}")){

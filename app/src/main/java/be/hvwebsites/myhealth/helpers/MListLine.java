@@ -1,7 +1,6 @@
 package be.hvwebsites.myhealth.helpers;
 
 import java.util.List;
-import java.util.Optional;
 
 import be.hvwebsites.myhealth.constants.GlobalConstant;
 import be.hvwebsites.myhealth.entities.Measurement;

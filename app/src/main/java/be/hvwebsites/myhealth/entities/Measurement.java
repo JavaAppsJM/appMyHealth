@@ -70,6 +70,10 @@ public class Measurement {
         return this.measurementDate.getDateString();
     }
 
+    public String getMeasurementDateFormatted(){
+        return this.measurementDate.getFormatDate();
+    }
+
     public float getMeasurementValue() {
         return measurementValue;
     }
@@ -105,11 +109,12 @@ public class Measurement {
     public void setMeasurementDate(@NonNull String date) {
         this.measurementDate = new DateString(date);
         //this.dateInt = Integer.parseInt(date.substring(4) + date.substring(2,4) + date.substring(0,2));
-        this.dateInt = convertDateStringToDateInt(measurementDate.getDateString());
+        this.dateInt = measurementDate.getIntDate();
+        //this.dateInt = convertDateStringToDateInt(measurementDate.getDateString());
     }
 
     public String getDateAndValue(){
-        return this.getFormatMsrmtDate() + ": " + measurementValue;
+        return this.getMeasurementDateFormatted() + ": " + measurementValue;
     }
 
     public String getValueAsString(){
@@ -124,16 +129,8 @@ public class Measurement {
                 '}';
     }
 
+/*
     // Datum methodes
-    private String trimDate(String inputDate){
-        // Haal de / uit de datum
-        String[] dateStringParts = inputDate.split("/");
-        String day = leadingZero(dateStringParts[0]);
-        String month = leadingZero(dateStringParts[1]);
-        String year = dateStringParts[2];
-        return day + month + year;
-    }
-
     private static String leadingZero(String string){
         // Zet een leading zero indien die ontbreekt
         if (Integer.parseInt(string) < 10 && string.length() < 2){
@@ -143,6 +140,15 @@ public class Measurement {
         }
     }
 
+    private String trimDate(String inputDate){
+        // Haal de / uit de datum
+        String[] dateStringParts = inputDate.split("/");
+        String day = leadingZero(dateStringParts[0]);
+        String month = leadingZero(dateStringParts[1]);
+        String year = dateStringParts[2];
+        return day + month + year;
+    }
+
     public static int convertDateStringToDateInt(String inDate){
         return Integer.parseInt(leadingZero(inDate.substring(4)) + leadingZero(inDate.substring(2,4)) + inDate.substring(0,2));
     }
@@ -150,12 +156,10 @@ public class Measurement {
     public String getFormatMsrmtDate() {
         // Zet / in de datum
         return measurementDate.getFormatDate();
-/*
         String day = measurementDate.substring(0,2);
         String month = measurementDate.substring(2,4);
         String year = measurementDate.substring(4);
         return day + "/" + month + "/" + year;
 */
-    }
 
 }

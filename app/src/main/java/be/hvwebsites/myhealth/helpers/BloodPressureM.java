@@ -14,26 +14,38 @@ public class BloodPressureM {
     public static final String EXTRA_INTENT_KEY_HEARTB =
             "be.hvwebsites.myhealth.INTENT_KEY_HEARTB";
 
-    public BloodPressureM(Measurement upperPressure, Measurement lowerPressure, Measurement heartBeat) {
+    public BloodPressureM(Measurement upperPressure,
+                          Measurement lowerPressure,
+                          Measurement heartBeat) {
         if (checkInput(
-                upperPressure.getMeasurementDate(),
-                lowerPressure.getMeasurementDate(),
-                heartBeat.getMeasurementDate())){
-            this.measurementDate = upperPressure.getMeasurementDate();
+                upperPressure.getDateInt(),
+                lowerPressure.getDateInt(),
+                heartBeat.getDateInt())){
+            this.measurementDate = upperPressure.getMeasurementDateFormatted();
             this.upperPressure = upperPressure;
             this.lowerPressure = lowerPressure;
             this.heartBeat = heartBeat;
         }
     }
 
-    private boolean checkInput(
-            String bloodUpperDate,
-            String bloodLowerDate,
-            String heartbeatDate) {
-        if (bloodUpperDate.equals(bloodLowerDate) &&
-                bloodUpperDate.equals(heartbeatDate)) {
+    private static boolean checkInput(
+            int bloodUpperDate,
+            int bloodLowerDate,
+            int heartbeatDate) {
+        if ((bloodUpperDate == bloodLowerDate) &&
+        (bloodUpperDate == heartbeatDate)) {
             return true;
         } else return false;
+    }
+
+    public String getEmailString(){
+        return this.measurementDate
+                + " bovendruk: "
+                + String.valueOf(this.upperPressure.getMeasurementValue())
+                + " onderdruk: "
+                + this.lowerPressure.getMeasurementValue()
+                + " hartslag: "
+                + this.heartBeat.getMeasurementValue();
     }
 
     public String getMeasurementDate() {
