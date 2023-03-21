@@ -10,30 +10,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyHealth">
         <activity
+            android:name=".SendEmail"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UpdateMeasurementActivity"
-            android:parentActivityName=".MListActivity"
-            android:label="@string/title_update_belly">
+            android:label="@string/title_update_belly"
+            android:parentActivityName=".MListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="be.hvwebsites.myhealth.MListActivity" />
         </activity>
         <activity
             android:name=".NewMeasurementActivity"
-            android:parentActivityName=".MListActivity"
-            android:label="@string/title_new_belly">
+            android:label="@string/title_new_belly"
+            android:parentActivityName=".MListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="be.hvwebsites.myhealth.MListActivity" />
         </activity>
         <activity
             android:name=".MListActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/title_activity_belly">
+            android:label="@string/title_activity_belly"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

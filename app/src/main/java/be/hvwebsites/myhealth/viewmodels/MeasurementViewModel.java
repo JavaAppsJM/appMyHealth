@@ -106,20 +106,23 @@ public class MeasurementViewModel extends AndroidViewModel {
         return returninfo;
     }
 
-    public List<String> getMeasurementsForEmail(String minimumDate, boolean alreadySent){
-        // Lists de measurements to send
+    public String getMeasurementsForEmail(String minimumDate, boolean alreadySent){
+        // Maakt een email body string
         // minimumDate format ex: 01022022
         // alreadySent : true als de metingen die reeds verstuurd zijn terug mogen gestuurd worden
-        List<String> resultList = new ArrayList<>();
+        String emailBody = "";
+        //List<String> resultList = new ArrayList<>();
         for (int i = 0; i < upperMList.size(); i++) {
             if ((minimumDate == null || upperMList.get(i).getDateInt() > new DateString(minimumDate).getIntDate())
             && (alreadySent || upperMList.get(i).getLatestEmailDate() == null)){
                 // Meting mag verstuurd worden
-                resultList.add(new BloodPressureM(upperMList.get(i), lowerMList.get(i), heartbeatList.get(i))
+                emailBody = emailBody.concat(new BloodPressureM(upperMList.get(i), lowerMList.get(i), heartbeatList.get(i))
                         .getEmailString());
+                emailBody = emailBody.concat(String.format("%n"));
+                //resultList.add(new BloodPressureM(upperMList.get(i), lowerMList.get(i), heartbeatList.get(i)).getEmailString());
             }
         }
-        return resultList;
+        return emailBody;
     }
 
     public boolean isErrorViewModel() {

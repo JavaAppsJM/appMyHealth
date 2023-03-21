@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendEmail">
+
+    <TextView
+        android:id="@+id/instrSendEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/instruction_send_email"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelMinimumDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/label_minimum_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instrSendEmail" />
+
+    <EditText
+        android:id="@+id/valueMinimumDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/enter_date_hint"
+        android:inputType="date"
+        android:onClick="showDatePicker"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelMinimumDate"
+        app:layout_constraintStart_toEndOf="@+id/labelMinimumDate" />
+
+    <CheckBox
+        android:id="@+id/checkboxAlreadySent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:checked="true"
+        android:text="@string/checkbox_already_sent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelMinimumDate" />
+
+    <TextView
+        android:id="@+id/labelEmailAdres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/label_email_adres"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkboxAlreadySent" />
+
+    <EditText
+        android:id="@+id/valueEmailAdres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/hint_email_adres"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelEmailAdres"
+        app:layout_constraintStart_toEndOf="@+id/labelEmailAdres" />
+
+    <Button
+        android:id="@+id/buttonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/button_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelEmailAdres" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

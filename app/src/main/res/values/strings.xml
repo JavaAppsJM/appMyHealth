@@ -53,5 +53,11 @@
     <string name="datepicker">datePicker</string>
     <string name="todo">TODO</string>
     <string name="hello_blank_fragment">Hello Blank Fragment</string>
+    <string name="label_email_adres">Email Adres:</string>
+    <string name="label_minimum_date">Startdatum metingen:</string>
+    <string name="hint_email_adres">email adres</string>
+    <string name="button_send">Send</string>
+    <string name="checkbox_already_sent">Enkel nog niet verstuurde metingen</string>
+    <string name="instruction_send_email">Vul in en druk Send</string>
 
 </resources>
