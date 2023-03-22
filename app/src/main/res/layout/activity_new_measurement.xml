@@ -80,6 +80,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/waarde2Label"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newScrnLabelWaarde1" />
 
@@ -100,7 +101,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/waarde2Hint"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelWaarde2"
         app:layout_constraintStart_toEndOf="@+id/newScrnLabelWaarde2"
         android:autofillHints="" />
@@ -112,7 +113,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/waarde3Hint"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintBaseline_toBaselineOf="@+id/newScrnLabelWaarde3"
         app:layout_constraintStart_toEndOf="@+id/newScrnLabelWaarde3"
         android:autofillHints="" />

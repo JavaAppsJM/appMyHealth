@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="be.hvwebsites.myhealth">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -11,10 +11,11 @@
         android:theme="@style/Theme.MyHealth">
         <activity
             android:name=".SendEmail"
-            android:exported="false">
+            android:label="Send Email"
+            android:parentActivityName=".MainActivity">
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".UpdateMeasurementActivity"

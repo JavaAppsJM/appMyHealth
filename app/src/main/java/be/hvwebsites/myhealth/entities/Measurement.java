@@ -31,6 +31,8 @@ public class Measurement {
     public Measurement(String inputDate, float inputValue) {
         setMeasurementDate(inputDate);
         measurementValue = inputValue;
+        latestEmailDate = new DateString();
+        setLatestEmailDate(DateString.EMPTY_DATESTRING);
     }
 
     public Measurement(String inFileLine){
